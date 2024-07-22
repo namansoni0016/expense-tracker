@@ -42,6 +42,27 @@ const transactionController = {
         }
         const transactions = await Transaction.find(filters).sort({date: -1})
         res.json(transactions);
+    }),
+    //update transaction
+    update: asyncHandler(async (req, res) => {
+        const transaction = await Transaction.findById(req.params.id);
+        if(transaction && transaction.user.toString() === req.user.toString()){
+            transaction.type = req.body.type || transaction.type;
+            transaction.category = req.body.category || transaction.category;
+            transaction.amount = req.body.amount || transaction.amount;
+            transaction.date = req.body.date || transaction.date;
+            transaction.description = req.body.description || transaction.description;
+            const updatedTransaction = await transaction.save();
+            res.json(updatedTransaction);
+        }
+    }),
+    //delete
+    delete: asyncHandler(async (req, res) => {
+        const transaction = await Transaction.findById(req.params.id);
+        if(transaction && transaction.user.toString() === req.user.toString()) {
+            await Transaction.findByIdAndDelete(req.params.id);
+            res.json({ message: "Transaction Deleted!"});
+        }
     })
 }
 

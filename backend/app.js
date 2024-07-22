@@ -20,7 +20,7 @@ app.use(express.json());
 //Routes
 app.use("/", userRouter);
 app.use("/", categoryRouter);
-app.use("/", transactionRouter);
+app.use("/", transactionRouter); 
 
 //Error
 app.use(errorHandler);
