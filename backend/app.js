@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRouter from "./routes/userRoute.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import categoryRouter from "./routes/categoryRoute.js";
+import transactionRouter from "./routes/transactionRoute.js";
 dotenv.config();
 
 const app = express();
@@ -17,6 +19,8 @@ app.use(express.json());
 
 //Routes
 app.use("/", userRouter);
+app.use("/", categoryRouter);
+app.use("/", transactionRouter);
 
 //Error
 app.use(errorHandler);
