@@ -41,3 +41,5 @@ const AlertMessage = ({ type, message}) => {
         </div>
     );
 };
+
+export default AlertMessage;
