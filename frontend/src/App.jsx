@@ -1,8 +1,20 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Homepage from "./Components/Homepage";
+import PublicNavbar from "./Components/Navbar/PublicNavbar";
+import Register from "./Components/Users/Register";
+import Login from "./Components/Users/Login";
+
 function App() {
   return (
-    <h1 className='text-3xl text-red-500 font-bold underline'>
-      Hello World
-    </h1>
+    <BrowserRouter>
+    {/* Navbar */}
+    <PublicNavbar/>
+      <Routes>
+        <Route path="/" element={<Homepage/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route path="/login" element={<Login/>}/>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

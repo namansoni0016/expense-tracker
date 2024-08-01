@@ -43,7 +43,7 @@ export default function Homepage() {
                 </div>
             </div>
             <div className='py-20 px-4'>
-                <h2 className='text-3xl font-bold text-center text-gray-100'>
+                <h2 className='text-3xl font-bold text-center text-gray-800'>
                     How it works
                 </h2>
                 <div className='mt-10 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8'>
