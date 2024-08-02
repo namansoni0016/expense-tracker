@@ -5,6 +5,7 @@ import userRouter from "./routes/userRoute.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import categoryRouter from "./routes/categoryRoute.js";
 import transactionRouter from "./routes/transactionRoute.js";
+import cors from "cors";
 dotenv.config();
 
 const app = express();
@@ -14,6 +15,11 @@ mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("Database Connected!"))
 .catch((e) => console.log(e));
 
+//Cors config
+const corsOptions = {
+    origin: ["http://localhost:5173"],
+};
+app.use(cors(corsOptions));
 //Middlewares
 app.use(express.json());
 

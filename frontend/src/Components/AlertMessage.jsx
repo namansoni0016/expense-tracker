@@ -2,7 +2,7 @@ import React from 'react';
 import { AiOutlineCheckCircle,
     AiOutlineCloseCircle,
     AiOutlineLoading3Quarters
-} from "react-icon/ai";
+} from "react-icons/ai";
 
 const AlertMessage = ({ type, message}) => {
     let icon;
