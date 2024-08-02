@@ -3,12 +3,15 @@ import Homepage from "./Components/Homepage";
 import PublicNavbar from "./Components/Navbar/PublicNavbar";
 import Register from "./Components/Users/Register";
 import Login from "./Components/Users/Login";
+import PrivateNavbar from "./Components/Navbar/PrivateNavbar";
+import { useSelector } from "react-redux";
 
 function App() {
+  const user = useSelector((state) => state?.auth?.user);
   return (
     <BrowserRouter>
     {/* Navbar */}
-    <PublicNavbar/>
+    {user ? <PrivateNavbar/> : <PublicNavbar/>}
       <Routes>
         <Route path="/" element={<Homepage/>}/>
         <Route path="/register" element={<Register/>}/>

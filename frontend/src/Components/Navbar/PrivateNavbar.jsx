@@ -4,16 +4,23 @@ import { Link } from 'react-router-dom';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { SiAuthy } from 'react-icons/si';
 import { XMarkIcon, Bars3Icon, BellIcon } from '@heroicons/react/24/outline';
+import { useDispatch } from 'react-redux';
+import { logoutAction } from '../../redux/slice/authSlice';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
 export default function PrivateNavbar() {
+    // Dispatch
+    const dispatch = useDispatch();
+    //Logout Handler
     const logoutHandler = () => {
-        // Your logout logic here
+        console.log("Helllos")
+        dispatch(logoutAction());
+        //remove user from storage
+        localStorage.removeItem('userInfo');
     };
-
     return (
         <Disclosure as="nav" className="bg-white">
             {({ open }) => (
