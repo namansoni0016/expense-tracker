@@ -7,6 +7,7 @@ import { loginAPI } from "../../services/users/userServices";
 import AlertMessage from "../AlertMessage.jsx";
 import { loginAction } from "../../redux/slice/authSlice.js";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 //Validations
 const validationSchema = Yup.object({
@@ -15,8 +16,10 @@ const validationSchema = Yup.object({
 })
 
 const Login = () => {
+    //Navigate
+    const navigate = useNavigate();
     //Dispatch
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     // Mutation
     const { mutateAsync, isPending, isError, error, isSuccess } = useMutation({
         mutationFn: loginAPI,
@@ -41,6 +44,14 @@ const Login = () => {
             }).catch(e=>console.log(e))
         }
     });
+    //Redirect
+    useEffect(() => {
+        setTimeout(() => {
+            if(isSuccess){
+                navigate('/profile')
+            }
+        }, 1000)
+    }, [isPending, isError, error, isSuccess]);
     return (
         <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto my-10 bg-white p-6 rounded-xl shadow-lg space-y-6 border border-gray-200">
             <h2 className="text-3xl font-semibold text-center text-gray-800">Login</h2>

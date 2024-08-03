@@ -16,7 +16,6 @@ export default function PrivateNavbar() {
     const dispatch = useDispatch();
     //Logout Handler
     const logoutHandler = () => {
-        console.log("Helllos")
         dispatch(logoutAction());
         //remove user from storage
         localStorage.removeItem('userInfo');

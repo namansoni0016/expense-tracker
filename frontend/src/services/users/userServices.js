@@ -10,3 +10,14 @@ export const loginAPI = async({ email, password }) => {
     //Return a promise
     return response.data;
 }
+
+//Registration
+export const registerAPI = async({ email, password, username }) => {
+    const response = await axios.post(`${BASE_URL}/users/register`, {
+        email,
+        password,
+        username,
+    });
+    //Return a promise
+    return response.data;
+}
