@@ -10,6 +10,8 @@ import {
 import { SiDatabricks } from "react-icons/si";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
+import { updateCategoryAPI } from "../../services/category/categoryService";
+import AlertMessage from "../AlertMessage";
 
 const validationSchema = Yup.object({
     name: Yup.string().required("Category name is required!").oneOf(["income", "expense"]),
@@ -17,12 +19,30 @@ const validationSchema = Yup.object({
 });
 
 const UpdateCategory = () => {
+    //Params
+    const { id } = useParams();
+    //Navigate
+    const navigate = useNavigate();
+    // Mutation
+    const { mutateAsync, isPending, isError, error, isSuccess } = useMutation({
+        mutationFn: updateCategoryAPI,
+        mutationKey: ['update-category']
+    });
     const formik = useFormik({
         initialValues: {
             type: "",
             name: "",
         },
-        onSubmit: (values) => {},
+        onSubmit: (values) => {
+            const data = {
+                ...values,
+                id
+            }
+            mutateAsync(data).then((data)=>{
+                //redirect
+                navigate('/categories')
+            }).catch((e) => console.log(e));
+        },
     });
     return (
         <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto my-10 bg-white p-6 rounded-lg shadow-lg space-y-6">
@@ -30,9 +50,9 @@ const UpdateCategory = () => {
                 <h2 className="text-2xl font-semibold text-gray-800">Update Category</h2>
                 <p className="text-gray-600">Fill in the details below.</p>
             </div>
-            {/* Display alert
+            {/* Display alert */}
             {isError && (<AlertMessage type="error" message={error?.response?.data?.message || "Something happened please try again later"} />)}
-            {isSuccess && (<AlertMessage type="success" message="Category added successfully, redirecting..." />)} */}
+            {isSuccess && (<AlertMessage type="success" message="Category added successfully, redirecting..." />)}
             {/* Category Type */}
             <div className="space-y-2">
                 <label htmlFor="type" className="flex gap-2 items-center text-gray-700 font-medium">

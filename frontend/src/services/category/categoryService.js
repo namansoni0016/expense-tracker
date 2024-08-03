@@ -28,3 +28,28 @@ export const listCategoriesAPI = async() => {
     //Return a promise
     return response.data;
 }
+
+//Update category
+export const updateCategoryAPI = async({ name, type, id }) => {
+    const response = await axios.put(`${BASE_URL}/categories/update/${id}`, {
+        name,
+        type,
+    }, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    //Return a promise
+    return response.data;
+}
+
+//delete category
+export const deleteCategoryAPI = async(id) => {
+    const response = await axios.delete(`${BASE_URL}/categories/delete/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    //Return a promise
+    return response.data;
+}

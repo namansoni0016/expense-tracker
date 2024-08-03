@@ -7,6 +7,7 @@ import PrivateNavbar from "./Components/Navbar/PrivateNavbar";
 import AddCategory from "./Components/Category/AddCategory";
 import { useSelector } from "react-redux";
 import CategoryList from "./Components/Category/CategoryList";
+import UpdateCategory from "./Components/Category/UpdateCategory";
 
 function App() {
   const user = useSelector((state) => state?.auth?.user);
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/add-category" element={<AddCategory/>}/>
         <Route path="/categories" element={<CategoryList/>}/>
+        <Route path="/update-category/:id" element={<UpdateCategory/>}/>
       </Routes>
     </BrowserRouter>
   )

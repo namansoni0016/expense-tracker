@@ -2,14 +2,30 @@ import React from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { listCategoriesAPI } from "../../services/category/categoryService";
+import { listCategoriesAPI, deleteCategoryAPI } from "../../services/category/categoryService";
 import AlertMessage from "../AlertMessage";
+import { useNavigate } from "react-router-dom";
 
 const CategoryList = () => {
-    const { data, isError, isLoading, isFetched, error } = useQuery({
+    //Fetching
+    const { data, isError, isLoading, isFetched, error, refetch } = useQuery({
         queryFn: listCategoriesAPI,
         queryKey: ['list-categories']
     });
+    //Deleting
+    const navigate = useNavigate();
+    // Mutation
+    const { mutateAsync, isPending, error: categoryError, isSuccess } = useMutation({
+        mutationFn: deleteCategoryAPI,
+        mutationKey: ['delete-category']
+    });
+    //Delete Handler
+    const handleDelete = (id) => {
+        mutateAsync(id).then((date)=>{
+            //refetch
+            refetch();
+        }).catch(e=>console.log(e));
+    }
     return (
         <div className="max-w-md mx-auto my-10 bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Categories</h2>

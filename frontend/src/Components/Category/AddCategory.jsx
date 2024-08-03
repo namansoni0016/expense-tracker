@@ -24,7 +24,7 @@ const AddCategory = () => {
     // Mutation
     const { mutateAsync, isPending, isError, error, isSuccess } = useMutation({
         mutationFn: addCategoryAPI,
-        mutationKey: ['login']
+        mutationKey: ['add-category']
     });
     const formik = useFormik({
         initialValues: {
@@ -33,7 +33,9 @@ const AddCategory = () => {
         },
         validationSchema,
         onSubmit: (values) => {
-            mutateAsync(values).then((data)=>console.log(data)).catch(e=>console.log(e));
+            mutateAsync(values).then((data)=>{
+                navigate('/categories')
+            }).catch(e=>console.log(e));
         },
     });
     return (
