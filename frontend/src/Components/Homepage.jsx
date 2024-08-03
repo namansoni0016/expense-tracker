@@ -94,12 +94,12 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
-            <div className="bg-blue-500 text-white py-20 px-4">
+            <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white py-20 px-4">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-3xl font-bold">Ready to Take Control of Your Finances?</h2>
                     <p className="mt-4">Join us now and start managing your expenses like a pro!</p>
                     <Link to="/register">
-                        <button className="mt-8 px-6 py-3 bg-white text-blue-500 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition duration-300">Sign Up For Free</button>
+                        <button className="mt-8 px-6 py-3 bg-white text-green-500 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition duration-300">Sign Up For Free</button>
                     </Link>
                 </div>
             </div>

@@ -10,19 +10,31 @@ import {
 import { SiDatabricks } from "react-icons/si";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { addCategoryAPI } from "../../services/category/categoryService.js";
+import AlertMessage from "../AlertMessage.jsx";
 
 const validationSchema = Yup.object({
-    name: Yup.string().required("Category name is required!").oneOf(["income", "expense"]),
+    name: Yup.string().required("Category name is required!"),
     type: Yup.string().required("Category type is required!").oneOf(["income", "expense"]),
 });
 
 const AddCategory = () => {
+    //Navigate
+    const navigate = useNavigate();
+    // Mutation
+    const { mutateAsync, isPending, isError, error, isSuccess } = useMutation({
+        mutationFn: addCategoryAPI,
+        mutationKey: ['login']
+    });
     const formik = useFormik({
         initialValues: {
             type: "",
             name: "",
         },
-        onSubmit: (values) => {},
+        validationSchema,
+        onSubmit: (values) => {
+            mutateAsync(values).then((data)=>console.log(data)).catch(e=>console.log(e));
+        },
     });
     return (
         <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto my-10 bg-white p-6 rounded-lg shadow-lg space-y-6">

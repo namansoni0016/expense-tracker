@@ -24,7 +24,7 @@ const categoryController = {
             user: req.user,
             type, 
         });
-        res.statusCode(201).json(category);
+        res.status(201).json(category);
     }),
     //lists
     lists: asyncHandler(async (req, res) => {
