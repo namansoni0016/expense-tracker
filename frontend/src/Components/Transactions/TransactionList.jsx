@@ -6,6 +6,18 @@ import { listTransactionAPI } from "../../services/transactions/transactionServi
 import { listCategoriesAPI } from "../../services/category/categoryService";
 
 const TransactionList = () => {
+    //Filtering state
+    const [ filters, setFilters ] = useState({
+        startDate: '',
+        endDate: '',
+        type: '',
+        category: ''
+    });
+    //Handle filter change
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setFilters((prev) => ({...prev, [name]: value}));
+    };
     //Fetching categories
     const { data: categoriesData, isLoading: categoryLoading, error: categoryError} = useQuery({
         queryFn: listCategoriesAPI,
@@ -13,19 +25,19 @@ const TransactionList = () => {
     });
     //Fetching
     const { data: transactions, isError, isLoading, isFetched, error, refetch } = useQuery({
-        queryFn: listTransactionAPI,
-        queryKey: ['list-transactions']
+        queryFn: () => listTransactionAPI(filters),
+        queryKey: ['list-transactions', filters],
     });
     return (
         <div className="my-4 p-4 shadow-lg rounded-lg bg-white">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Start Date */}
-            <input type="date" name="startDate" className="p-2 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"/>
+            <input type="date" value={filters.startDate} onChange={handleFilterChange} name="startDate" className="p-2 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"/>
             {/* End Date */}
-            <input type="date" name="endDate" className="p-2 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"/>
+            <input type="date" value={filters.endDate} onChange={handleFilterChange} name="endDate" className="p-2 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"/>
             {/* Type */}
             <div className="relative">
-                <select name="type" className="w-full p-2 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 appearance-none">
+                <select name="type" value={filters.type} onChange={handleFilterChange} className="w-full p-2 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 appearance-none">
                     <option value="">All Types</option>
                     <option value="income">Income</option>
                     <option value="expense">Expense</option>
@@ -34,7 +46,9 @@ const TransactionList = () => {
             </div>
             {/* Category */}
             <div className="relative">
-                <select name="category" className="w-full p-2 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 appearance-none">
+                <select name="category" value={filters.category} onChange={handleFilterChange} className="w-full p-2 rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 appearance-none">
+                    <option value='All'>All Categories</option>
+                    <option value='Uncategorized'>Uncategories</option>
                     {categoriesData?.map((category) => {
                         return (
                             <option key={category?._id} value={category?.name}>
