@@ -13,6 +13,7 @@ const transactionController = {
             type, 
             category,
             amount,
+            date,
             description,
         });
         res.status(201).json(transaction);
