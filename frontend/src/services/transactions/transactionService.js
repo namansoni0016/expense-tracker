@@ -33,3 +33,31 @@ export const listTransactionAPI = async({startDate, endDate, type, category}) =>
     //Return a promise
     return response.data;
 }
+
+//Update transaction
+export const updateTransactionAPI = async({ type, amount, category, date, description, id }) => {
+    const response = await axios.put(`${BASE_URL}/transactions/update/${id}`, {
+        type,
+        amount,
+        category,
+        date,
+        description,
+    }, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    //Return a promise
+    return response.data;
+}
+
+//delete transaction
+export const deleteTransactionAPI = async(id) => {
+    const response = await axios.delete(`${BASE_URL}/transactions/delete/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    //Return a promise
+    return response.data;
+}

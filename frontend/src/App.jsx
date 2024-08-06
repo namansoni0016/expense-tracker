@@ -11,6 +11,7 @@ import UpdateCategory from "./Components/Category/UpdateCategory";
 import TransactionForm from "./Components/Transactions/TransactionForm";
 import Dashboard from "./Components/Users/Dashboard";
 import UserProfile from "./Components/Users/UserProfile";
+import UpdateTransaction from "./Components/Transactions/UpdateTransaction";
 import AuthRoute from "./Components/AuthRoute";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/categories" element={<CategoryList/>}/>
           <Route path="/update-category/:id" element={<UpdateCategory/>}/>
           <Route path="/add-transaction" element={<TransactionForm/>}/>
+          <Route path="/update-transaction/:id" element={<UpdateTransaction/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/profile" element={<UserProfile/>}/>
         </Route>

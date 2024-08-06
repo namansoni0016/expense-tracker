@@ -8,7 +8,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const TransactionChart = () => {
     //Fetching
-    const { data: transactions, isError, isLoading, isFetched, error, refetch } = useQuery({
+    const { data: transactions } = useQuery({
         queryFn: listTransactionAPI,
         queryKey: ['list-transactions'],
     });
