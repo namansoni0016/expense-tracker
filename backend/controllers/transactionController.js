@@ -44,6 +44,16 @@ const transactionController = {
         const transactions = await Transaction.find(filters).sort({date: -1})
         res.json(transactions);
     }),
+    //Getting Update
+    getUpdate: asyncHandler(async (req, res) => {
+        const transactionId = req.params.id;
+        const transactionFound = await Transaction.findById(transactionId);
+        res.json({
+            status: "success",
+            message: "Transaction Fetched Successfully!",
+            transactionFound
+        })
+    }),
     //update transaction
     update: asyncHandler(async (req, res) => {
         const transaction = await Transaction.findById(req.params.id);

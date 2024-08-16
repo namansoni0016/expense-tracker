@@ -14,6 +14,7 @@ import { updateTransactionAPI } from "../../services/transactions/transactionSer
 import { useParams } from "react-router-dom";
 import { listCategoriesAPI } from "../../services/category/categoryService";
 import { useQuery } from "@tanstack/react-query";
+import { fetchATransaction } from "../../services/transactions/transactionService";
 
 const validationSchema = Yup.object({
     type: Yup.string().required("Transaction type is required").oneOf(["income", "expense"]),
@@ -24,13 +25,18 @@ const validationSchema = Yup.object({
 });
 
 const UpdateTransaction = () => {
+    //Params
+    const { id } = useParams();
     //Fetching categories
     const { data, isError: categoryIsError, isLoading, isFetched, error: categoryError, refetch } = useQuery({
         queryFn: listCategoriesAPI,
         queryKey: ['list-categories']
     });
-    //Params
-    const { id } = useParams();
+    //Fetching a single Transaction
+    const { data: transactionData } = useQuery({
+        queryFn: () => fetchATransaction(id),
+        queryKey: ['fetch-transaction'],
+    });
     //Navigate
     const navigate = useNavigate();
     // Mutation
@@ -40,12 +46,14 @@ const UpdateTransaction = () => {
     });
     const formik = useFormik({
         initialValues: {
-            type: "",
-            amount: "",
-            category: "",
-            date: "",
-            description: "",
+            type: transactionData?.transactionFound?.type || "",
+            amount: transactionData?.transactionFound?.amount || "",
+            category: transactionData?.transactionFound?.category || "",
+            date: transactionData?.transactionFound?.date ? new Date(transactionData.transactionFound.date).toISOString().split('T')[0] : "",
+            description: transactionData?.transactionFound?.description || "",
         },
+        enableReinitialize: true,
+        validationSchema,
         onSubmit: (values) => {
             const data = {
                 ...values,

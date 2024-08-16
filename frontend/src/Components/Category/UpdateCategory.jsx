@@ -1,38 +1,40 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-    FaDollarSign,
-    FaCalendarAlt,
-    FaRegCommentDots,
-    FaWallet,
-} from "react-icons/fa";
+import {FaWallet} from "react-icons/fa";
 import { SiDatabricks } from "react-icons/si";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateCategoryAPI } from "../../services/category/categoryService";
 import AlertMessage from "../AlertMessage";
+import { fetchACategory } from "../../services/category/categoryService";
 
 const validationSchema = Yup.object({
-    name: Yup.string().required("Category name is required!").oneOf(["income", "expense"]),
+    name: Yup.string().required("Category name is required!"),
     type: Yup.string().required("Category type is required!").oneOf(["income", "expense"]),
 });
 
 const UpdateCategory = () => {
     //Params
     const { id } = useParams();
+    const {data} = useQuery({
+        queryKey: ['fetch-category'],
+        queryFn: () => fetchACategory(id),
+    });
     //Navigate
     const navigate = useNavigate();
     // Mutation
-    const { mutateAsync, isPending, isError, error, isSuccess } = useMutation({
+    const { mutateAsync, isError, error, isSuccess } = useMutation({
         mutationFn: updateCategoryAPI,
         mutationKey: ['update-category']
     });
     const formik = useFormik({
         initialValues: {
-            type: "",
-            name: "",
+            type: data?.categoryFound?.type || "",
+            name: data?.categoryFound?.name || "",
         },
+        enableReinitialize: true,
+        validationSchema,
         onSubmit: (values) => {
             const data = {
                 ...values,

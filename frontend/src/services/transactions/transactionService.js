@@ -34,6 +34,16 @@ export const listTransactionAPI = async({startDate, endDate, type, category}) =>
     return response.data;
 }
 
+//fetch a transaction
+export const fetchATransaction = async(transactionId) => {
+    const transaction = await axios.get(`${BASE_URL}/transactions/update/${transactionId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return transaction.data;
+}
+
 //Update transaction
 export const updateTransactionAPI = async({ type, amount, category, date, description, id }) => {
     const response = await axios.put(`${BASE_URL}/transactions/update/${id}`, {

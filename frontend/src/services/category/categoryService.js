@@ -29,6 +29,16 @@ export const listCategoriesAPI = async() => {
     return response.data;
 }
 
+//fetch a category
+export const fetchACategory = async(categoryId) => {
+    const category = await axios.get(`${BASE_URL}/categories/update/${categoryId}`,{
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return category.data;
+}
+
 //Update category
 export const updateCategoryAPI = async({ name, type, id }) => {
     const response = await axios.put(`${BASE_URL}/categories/update/${id}`, {

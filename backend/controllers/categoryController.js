@@ -31,6 +31,15 @@ const categoryController = {
         const categories = await Category.find({ user: req.user});
         res.status(200).json(categories)
     }),
+    //Getting Update
+    getUpdate: asyncHandler(async (req, res) => {
+        const categoryId = req.params.categoryId;
+        const categoryFound = await Category.findById(categoryId);
+        res.json({
+            status: "Category Fetched Successfully!",
+            categoryFound
+        })
+    }),
     //update
     update: asyncHandler(async (req, res) => {
         const { categoryId } = req.params;
@@ -53,7 +62,10 @@ const categoryController = {
                 $set: {cateogry: updatedCategory.name}
             })
         }
-        res.json(updatedCategory);
+        res.json({
+            status: "Post Updated",
+            updatedCategory
+        });
     }),
     //delete
     delete: asyncHandler(async (req, res) => {
