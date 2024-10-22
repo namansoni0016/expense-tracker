@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 //Cors config
 const corsOptions = {
-    origin: ["http://localhost:5173"],
+    origin: ["https://moneymate-mu.vercel.app"],
 };
 app.use(cors(corsOptions));
 //Middlewares
