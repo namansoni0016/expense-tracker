@@ -28,8 +28,6 @@ app.use("/", userRouter);
 app.use("/", categoryRouter);
 app.use("/", transactionRouter); 
 
-app.use(express.static(path.join(__dirname, '/frontend/dist')));
-
 //Error
 app.use(errorHandler);
 
