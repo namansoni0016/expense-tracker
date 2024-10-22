@@ -6,7 +6,6 @@ import errorHandler from "./middlewares/errorHandler.js";
 import categoryRouter from "./routes/categoryRoute.js";
 import transactionRouter from "./routes/transactionRoute.js";
 import cors from "cors";
-import path from "path";
 dotenv.config();
 
 const app = express();
@@ -15,8 +14,6 @@ const app = express();
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("Database Connected!"))
 .catch((e) => console.log(e));
-
-const __dirname = path.resolve();
 
 //Cors config
 const corsOptions = {
@@ -32,9 +29,6 @@ app.use("/", categoryRouter);
 app.use("/", transactionRouter); 
 
 app.use(express.static(path.join(__dirname, '/frontend/dist')));
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirnamem, 'frontend', 'dist', 'index.html'))
-})
 
 //Error
 app.use(errorHandler);
